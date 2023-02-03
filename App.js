@@ -1,15 +1,17 @@
-import AppButton from "./app/components/AppButton";
-import ListingProductsScreen from "./app/screens/ListingProductsScreen";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
-import LoginScreen from "./app/screens/LoginScreen";
-import AppTextInput from "./app/components/AppTextInput";
-import Screen from "./app/components/Screen";
-import RegisterScreen from "./app/screens/RegisterScreen";
 import CreatingProductScreen from "./app/screens/CreatingProductScreen";
-import Product from "./app/components/ListProduct";
+import ListingProductsScreen from "./app/screens/ListingProductsScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import RegisterScreen from "./app/screens/RegisterScreen";
+import ViewProductScreen from "./app/screens/ViewProductScreen";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
 
 export default function App() {
-  return <ListingProductsScreen />;
+  // return <WelcomeScreen />;
+  // return <LoginScreen />;
+  // return <RegisterScreen />;
+  // return <ListingProductsScreen />;
+  // return <CreatingProductScreen />;
+  return <ViewProductScreen />;
 }
 
 // const styles = StyleSheet.create({
