@@ -24,4 +24,11 @@ function Icon({
   );
 }
 
+// in App
+{
+  /* <Screen>
+<Icon name="logout" size={50} backgroundColor="red" iconColor="white" />
+</Screen> */
+}
+
 export default Icon;

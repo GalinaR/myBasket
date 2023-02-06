@@ -30,12 +30,14 @@ function CreatingProductScreen(props) {
           maxLength={8}
           name="price"
           placeholder="Price"
+          width={120} // if don't write width it will be default 100% (from AppTextInput and AppFormField)
         />
         <AppFormField
           maxLength={100}
           autoCorrect={false}
           name="store"
           placeholder="Store"
+          width="50%" // if don't write width it will be default 100% (from AppTextInput and AppFormField)
         />
         <SubmitButton title="Create" />
       </AppForm>

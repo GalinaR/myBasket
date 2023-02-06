@@ -4,17 +4,19 @@ import { View, Image, StyleSheet, TouchableHighlight } from "react-native";
 import colors from "../config/colors";
 import AppText from "./AppText";
 
-function ListProduct({ title, price, image, store, onPress }) {
+function ListProduct({ title, price, image, IconComponent, store, onPress }) {
   return (
     <TouchableHighlight
       underlayColor={colors.light}
       onPress={onPress} // go to ViewProductScreen
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={image} />
+        {/* ImageComponent for Icon rendering */}
+        {IconComponent}
+        {image && <Image style={styles.image} source={image} />}
         <View style={styles.textContainer}>
           <AppText style={styles.title}>{title}</AppText>
-          <AppText style={styles.price}>${price}</AppText>
+          {price && <AppText style={styles.price}>{price}</AppText>}
         </View>
         <AppText style={styles.store}>{store}</AppText>
       </View>
@@ -24,25 +26,25 @@ function ListProduct({ title, price, image, store, onPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    // borderRadius: 15,
-    // widht: "100%",
-    // height: 70,
-    // backgroundColor: colors.white,
-    // marginBottom: 20,
-    // overflow: "hidden",
+    borderRadius: 15,
+
+    backgroundColor: colors.white,
+
     flexDirection: "row",
-    padding: 5,
+    paddingVertical: 5,
+    // alignItems: "center",
   },
   image: {
     width: 70,
     height: 70,
+    marginLeft: 5,
   },
   price: {
     color: colors.medium,
     fontWeight: "bold",
   },
   store: {
-    marginLeft: 20,
+    marginRight: 10,
     alignSelf: "center",
     // justifyContent: "center",
     // fontWeight: "bold",
@@ -50,6 +52,7 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: "center",
     marginLeft: 10,
+    flex: 1,
   },
   // title: {
   //   fontSize: 20,

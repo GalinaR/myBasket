@@ -4,26 +4,27 @@ import { StyleSheet, FlatList, View } from "react-native";
 import ListItemSeparator from "../components/ListItemSeparator";
 import ListProduct from "../components/ListProduct";
 import Screen from "../components/Screen";
+import colors from "../config/colors";
 
 const products = [
   {
     id: 1,
     title: "Lemon",
-    price: "2",
+    price: 2,
     store: "Walmart",
     image: require("../assets/lemon.jpeg"),
   },
   {
     id: 2,
     title: "Pistachios",
-    price: "16.99",
+    price: 16.99,
     store: "Costco",
     image: require("../assets/pistachios.jpeg"),
   },
   {
     id: 3,
     title: "Greek Spanakopita",
-    price: "4.49",
+    price: 4.49,
     store: "Trader Joe's",
     image: require("../assets/spanakopita.jpeg"),
   },
@@ -38,14 +39,14 @@ function ListingProductsScreen(props) {
     //     <AppText style={styles.price}>$2</AppText>
     //   </View>
     // </View>
-    <Screen style={styles.container}>
+    <Screen style={styles.screen}>
       <FlatList
         data={products}
         keyExtractor={(products) => products.id.toString()}
         renderItem={({ item }) => (
           <ListProduct
             title={item.title}
-            price={item.price}
+            price={"$" + item.price}
             store={item.store}
             image={item.image}
             onPress={() =>
@@ -66,11 +67,12 @@ function ListingProductsScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 15,
+  screen: {
+    padding: 10,
+    backgroundColor: colors.light,
   },
   // detailsContainer: {
-  //   padding: 20,
+
   // },
   // image: {
   //   width: "100%",
