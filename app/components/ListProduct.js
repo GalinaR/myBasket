@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, FlatList } from "react-native";
 
 import colors from "../config/colors";
 import AppText from "./AppText";
@@ -20,12 +20,13 @@ function ListProduct({ title, price, image, store }) {
 const styles = StyleSheet.create({
   container: {
     // borderRadius: 15,
-    widht: "100%",
-    height: 70,
-    backgroundColor: colors.white,
+    // widht: "100%",
+    // height: 70,
+    // backgroundColor: colors.white,
     // marginBottom: 20,
     // overflow: "hidden",
     flexDirection: "row",
+    padding: 5,
   },
   image: {
     width: 70,

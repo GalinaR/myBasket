@@ -9,9 +9,9 @@ export default function App() {
   // return <WelcomeScreen />;
   // return <LoginScreen />;
   // return <RegisterScreen />;
-  // return <ListingProductsScreen />;
+  return <ListingProductsScreen />;
   // return <CreatingProductScreen />;
-  return <ViewProductScreen />;
+  // return <ViewProductScreen />;
 }
 
 // const styles = StyleSheet.create({
