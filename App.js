@@ -4,14 +4,22 @@ import LoginScreen from "./app/screens/LoginScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import ViewProductScreen from "./app/screens/ViewProductScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
+import Screen from "./app/components/Screen";
+import Icon from "./app/components/Icon";
+import AppText from "./app/components/AppText";
 
 export default function App() {
   // return <WelcomeScreen />;
   // return <LoginScreen />;
   // return <RegisterScreen />;
-  return <ListingProductsScreen />;
+  // return <ListingProductsScreen />;
   // return <CreatingProductScreen />;
   // return <ViewProductScreen />;
+  return (
+    <Screen>
+      <Icon name="logout" size={50} backgroundColor="red" iconColor="white" />
+    </Screen>
+  );
 }
 
 // const styles = StyleSheet.create({

@@ -1,19 +1,24 @@
 import React from "react";
-import { View, Image, StyleSheet, FlatList } from "react-native";
+import { View, Image, StyleSheet, TouchableHighlight } from "react-native";
 
 import colors from "../config/colors";
 import AppText from "./AppText";
 
-function ListProduct({ title, price, image, store }) {
+function ListProduct({ title, price, image, store, onPress }) {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={image} />
-      <View style={styles.textContainer}>
-        <AppText style={styles.title}>{title}</AppText>
-        <AppText style={styles.price}>${price}</AppText>
+    <TouchableHighlight
+      underlayColor={colors.light}
+      onPress={onPress} // go to ViewProductScreen
+    >
+      <View style={styles.container}>
+        <Image style={styles.image} source={image} />
+        <View style={styles.textContainer}>
+          <AppText style={styles.title}>{title}</AppText>
+          <AppText style={styles.price}>${price}</AppText>
+        </View>
+        <AppText style={styles.store}>{store}</AppText>
       </View>
-      <AppText style={styles.store}>{store}</AppText>
-    </View>
+    </TouchableHighlight>
   );
 }
 

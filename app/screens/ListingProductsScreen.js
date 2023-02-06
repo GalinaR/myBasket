@@ -48,6 +48,9 @@ function ListingProductsScreen(props) {
             price={item.price}
             store={item.store}
             image={item.image}
+            onPress={() =>
+              console.log("Product is opened (ViewProductSceen)", item)
+            }
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
