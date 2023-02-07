@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import ImageInput from "../components/ImageInput";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -12,8 +13,14 @@ const validationSchema = Yup.object().shape({
 });
 
 function CreatingProductScreen(props) {
+  const [imageUri, setImageUri] = useState();
+
   return (
     <Screen style={styles.container}>
+      <ImageInput
+        imageUri={imageUri}
+        onChangeImage={(uri) => setImageUri(uri)}
+      />
       <AppForm
         initialValues={{ title: "", price: "", store: "" }}
         onSubmit={(values) => console.log(values)}
