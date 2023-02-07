@@ -10,6 +10,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
   price: Yup.number().required().min(1).max(10000).label("Price"),
   store: Yup.string().required().min(1).label("Store"),
+  image: Yup.string().required().label("Images"),
 });
 
 function CreatingProductScreen(props) {
@@ -17,15 +18,16 @@ function CreatingProductScreen(props) {
 
   return (
     <Screen style={styles.container}>
-      <ImageInput
-        imageUri={imageUri}
-        onChangeImage={(uri) => setImageUri(uri)}
-      />
       <AppForm
-        initialValues={{ title: "", price: "", store: "" }}
+        initialValues={{ title: "", price: "", store: "", image: "" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
+        <ImageInput
+          imageUri={imageUri}
+          onChangeImage={(uri) => setImageUri(uri)}
+          name="image"
+        />
         <AppFormField
           maxLength={100}
           autoCorrect={false}

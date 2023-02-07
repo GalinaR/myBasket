@@ -15,15 +15,22 @@ import * as ImagePicker from "expo-image-picker";
 import ImageInput from "./app/components/ImageInput";
 
 import { Button, Image } from "react-native";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   // return <WelcomeScreen />;
   // return <LoginScreen />;
   // return <RegisterScreen />;
   // return <ListingProductsScreen />;
-  return <CreatingProductScreen />;
+  // return <CreatingProductScreen />;
   // return <ViewProductScreen />;
   // return <AccountScreen />;
+  return (
+    <NavigationContainer>
+      <AuthNavigator />
+    </NavigationContainer>
+  );
 
   // const [imageUri, setImageUri] = useState();
 
