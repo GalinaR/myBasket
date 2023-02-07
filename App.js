@@ -17,6 +17,7 @@ import ImageInput from "./app/components/ImageInput";
 import { Button, Image } from "react-native";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import navigationTheme from "./app/navigation/navigationTheme";
 
 export default function App() {
   // return <WelcomeScreen />;
@@ -27,7 +28,7 @@ export default function App() {
   // return <ViewProductScreen />;
   // return <AccountScreen />;
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
       <AuthNavigator />
     </NavigationContainer>
   );
