@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, FlatList } from "react-native";
 
+import colors from "../config/colors";
 import ListItemSeparator from "../components/ListItemSeparator";
 import ListProduct from "../components/ListProduct";
-import Screen from "../components/Screen";
-import colors from "../config/colors";
 import NewProductButton from "../navigation/NewProductButton";
+import routes from "../navigation/routes";
+import Screen from "../components/Screen";
 
 const products = [
   {
@@ -45,7 +46,7 @@ function ListingProductsScreen(props) {
             store={item.store}
             image={item.image}
             onPress={() => {
-              navigation.navigate("ProductDetails", item);
+              navigation.navigate(routes.PRODUCT_DETAILS, item);
             }}
           />
         )}
@@ -53,7 +54,7 @@ function ListingProductsScreen(props) {
       />
       <NewProductButton
         onPress={() => {
-          return navigation.navigate("CreateProduct");
+          return navigation.navigate(routes.CREATE_PRODUCT);
         }}
       />
     </Screen>

@@ -7,14 +7,13 @@ import {
 } from "react-native";
 
 import ListProduct from "../components/ListProduct";
-import Icon from "../components/Icon";
 import AppText from "../components/AppText";
-
+import Icon from "../components/Icon";
+import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import WelcomeScreen from "./WelcomeScreen";
 
 function AccountScreen(props) {
-  console.log("AccountScreen", props);
   return (
     <Screen style={styles.container}>
       <View style={styles.account}>
@@ -22,7 +21,7 @@ function AccountScreen(props) {
         <AppText style={styles.email}>galina.sergarz@gmail.com</AppText>
       </View>
       <TouchableWithoutFeedback
-        onPress={() => props.navigation.navigate("LogOut")}
+        onPress={() => props.navigation.navigate(routes.LOGOUT)}
       >
         <View style={styles.logout}>
           <Icon
