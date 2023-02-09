@@ -9,11 +9,10 @@ import ListingProductsNavigator from "./ListingProductsNavigator";
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
-  <Tab.Navigator>
+  <Tab.Navigator screenOptions={{ headerShown: false }}>
     <Tab.Screen
       name="Home"
       component={ListingProductsNavigator}
-      screenOptions={{ headerShown: false }}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />

@@ -11,10 +11,14 @@ const Stack = createStackNavigator();
 const AccountNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AccountScreen" component={AccountScreen} />
+      <Stack.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="LogOut" component={WelcomeScreen} />
-      <Stack.Screen name="LogIn" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
+      {/* <Stack.Screen name="LogIn" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} /> */}
     </Stack.Navigator>
   );
 };

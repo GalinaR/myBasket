@@ -33,11 +33,6 @@ function AccountScreen(props) {
           />
         </View>
       </TouchableWithoutFeedback>
-
-      {/* <Button
-          title="Button"
-          
-        ></Button> */}
     </Screen>
   );
 }
