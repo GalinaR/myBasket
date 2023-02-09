@@ -13,6 +13,7 @@ const AppNavigator = () => (
     <Tab.Screen
       name="Home"
       component={ListingProductsNavigator}
+      screenOptions={{ headerShown: false }}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />
@@ -22,6 +23,7 @@ const AppNavigator = () => (
     <Tab.Screen
       name="Basket"
       component={CreatingProductScreen}
+      screenOptions={{ headerShown: false }}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons

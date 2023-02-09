@@ -27,7 +27,7 @@ function AccountScreen(props) {
         <View style={styles.logout}>
           <Icon
             name="logout"
-            size={50}
+            size={70}
             backgroundColor="red"
             iconColor="white"
           />
