@@ -16,7 +16,7 @@ function WelcomeScreen({ navigation }) {
         <Text style={styles.tagline}>Create a shopping list easily</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <AppButton title="Login" onPress={() => navigation.navigate("Login")} />
+        <AppButton title="Login" onPress={() => navigation.navigate("LogIn")} />
         <AppButton
           title="Register"
           color="secondary"

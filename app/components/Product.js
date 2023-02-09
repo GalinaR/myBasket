@@ -17,8 +17,8 @@ function Product({ title, price, image, store }) {
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: 400,
+    width: "70%",
+    height: 270,
   },
   price: {
     color: colors.secondary,

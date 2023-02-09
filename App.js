@@ -18,6 +18,7 @@ import { Button, Image } from "react-native";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
 
 export default function App() {
   // return <WelcomeScreen />;
@@ -29,7 +30,7 @@ export default function App() {
   // return <AccountScreen />;
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 

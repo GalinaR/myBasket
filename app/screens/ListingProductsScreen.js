@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 
 import ListItemSeparator from "../components/ListItemSeparator";
 import ListProduct from "../components/ListProduct";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
+import NewProductButton from "../navigation/NewProductButton";
 
 const products = [
   {
@@ -31,14 +32,8 @@ const products = [
 ];
 
 function ListingProductsScreen(props) {
+  const { navigation } = props;
   return (
-    // <View>
-    //   <Image style={styles.image} source={require("../assets/lemon.jpeg")} />
-    //   <View style={styles.detailsContainer}>
-    //     <AppText style={styles.title}>Lemon</AppText>
-    //     <AppText style={styles.price}>$2</AppText>
-    //   </View>
-    // </View>
     <Screen style={styles.screen}>
       <FlatList
         data={products}
@@ -49,19 +44,18 @@ function ListingProductsScreen(props) {
             price={"$" + item.price}
             store={item.store}
             image={item.image}
-            onPress={() =>
-              console.log("Product is opened (ViewProductSceen)", item)
-            }
+            onPress={() => {
+              navigation.navigate("ProductDetails", item);
+            }}
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
       />
-      {/* <ListProduct
-        title="Lemon"
-        price="2"
-        image={require("../assets/lemon.jpeg")}
-        store="Walmart"
-      /> */}
+      <NewProductButton
+        onPress={() => {
+          return navigation.navigate("CreateProduct");
+        }}
+      />
     </Screen>
   );
 }
@@ -71,23 +65,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.light,
   },
-  // detailsContainer: {
-
-  // },
-  // image: {
-  //   width: "100%",
-  //   height: 300,
-  // },
-  // price: {
-  //   color: colors.secondary,
-  //   fontWeight: "bold",
-  //   fontSize: 20,
-  //   marginVertical: 10,
-  // },
-  // title: {
-  //   fontSize: 24,
-  //   fontWeight: "500",
-  // },
 });
 
 export default ListingProductsScreen;
