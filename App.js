@@ -19,6 +19,7 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
+import FormImagePicker from "./app/components/forms/FormImagePicker";
 
 export default function App() {
   // return <WelcomeScreen />;
@@ -28,6 +29,7 @@ export default function App() {
   // return <CreatingProductScreen />;
   // return <ViewProductScreen />;
   // return <AccountScreen />;
+  // return <FormImagePicker />;
   return (
     <NavigationContainer theme={navigationTheme}>
       <AppNavigator />

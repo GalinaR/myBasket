@@ -9,22 +9,19 @@ function FormImagePicker({ name }) {
   const imageUri = values[name];
 
   const handleAdd = (uri) => {
-    setFieldValue(name, [...imageUri, uri]);
+    setFieldValue(name, uri);
   };
 
-  const handleRemove = (uri) => {
-    setFieldValue(
-      name,
-      imageUris.filter((imageUri) => imageUri !== uri)
-    );
-  };
+  // const handleRemove = (uri) => {
+  //   setFieldValue(
+  //     name,
+  //     imageUri.filter((imageUri) => imageUri !== uri)
+  //   );
+  // };
 
   return (
     <>
-      <ImageInput
-        imageUri={imageUri}
-        onChangeImage={(uri) => setImageUri(uri)}
-      />
+      <ImageInput imageUri={imageUri} onChangeImage={handleAdd} />
       <ErrorMessage error={errors[name]} visible={touched[name]} />
       {/* <ImageInputList
         imageUris={imageUris}
