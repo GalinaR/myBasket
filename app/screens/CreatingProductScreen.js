@@ -7,6 +7,7 @@ import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import ImageInput from "../components/ImageInput";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import ModalTester from "../components/ModalTester";
+import AppSelectStoreList from "../components/AppSelectStoreList";
 
 const validationSchema = Yup.object();
 // .shape({
@@ -19,9 +20,9 @@ const validationSchema = Yup.object();
 function CreatingProductScreen(props) {
   const [product, setProduct] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [store, setStore] = useState(""); // This is to manage TextInput State
+  const [createdStore, setCreatedStore] = useState("");
 
-  console.log("!!!! CreatingProductScreen !!!!", product, store);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/products", {
@@ -39,13 +40,13 @@ function CreatingProductScreen(props) {
   }, [product]);
 
   useEffect(() => {
-    console.log("!!!! send store !!!!", store);
+    console.log("!!!! send store !!!!", createdStore);
     fetch("http://localhost:5000/stores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ store }),
+      body: JSON.stringify({ store: createdStore }),
     })
       .then((response) => {
         console.log("response store", response);
@@ -55,19 +56,64 @@ function CreatingProductScreen(props) {
       .catch((err) => {
         return err;
       });
-  }, [store]);
+  }, [createdStore]);
+
+  // React.useEffect(
+  //   () =>
+  //     //Get Values from database
+  //     axios
+  //       .get("http://localhost:5000/stores")
+  //       .then((response) => {
+  //         // Store Values in Temporary Array
+  //         let newArray = response.data.map((item) => {
+  //           return { key: item.store_id, value: item.store };
+  //         });
+  //         //Set Data Variable
+  //         setData(newArray);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       }),
+  //   []
+  // );
+
+  useEffect(() => {
+    console.log("rendering dropDown", createdStore);
+    fetch("http://localhost:5000/stores", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((response) => {
+        console.log("rendering response store", response);
+        // Store Values in Temporary Array
+        const newArray = response.map((item) => {
+          return { key: item.store_id, value: item.store };
+        });
+        //Set Data Variable
+        setData(newArray);
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }, []);
 
   const toggleModal = (value) => () => {
     setModalVisible(!isModalVisible);
-    console.log("saveStore", value, store);
-    setStore(value);
+    setCreatedStore(value);
   };
 
   return (
     <Screen style={styles.container}>
       <AppForm
         initialValues={{ title: "", price: "", store: "", imageUri: "" }}
-        onSubmit={(product) => setProduct(product)} // {handleSubmit}
+        onSubmit={(product, actions) => {
+          console.log("AppForm", product, actions);
+          setProduct(product);
+        }} // {handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker
@@ -93,14 +139,24 @@ function CreatingProductScreen(props) {
           placeholder="Price"
           width={120} // if don't write width it will be default 100% (from AppTextInput and AppFormField)
         />
-        <AppFormField
+        {/* <AppFormField
           maxLength={100}
           autoCorrect={false}
           // data-store-id={1}
           name="store"
           placeholder="Store"
           width="50%" // if don't write width it will be default 100% (from AppTextInput and AppFormField)
+        /> */}
+        <AppSelectStoreList
+          // setSelected={setSelected}
+          data={data}
+          // onSelect={() => handleChange(selected)}
         />
+        {/* <SelectList
+          setSelected={setSelected}
+          data={data}
+          onSelect={() => handleChange(selected)}
+        /> */}
         <SubmitButton title="Create" />
       </AppForm>
       <Button title="Create store" onPress={toggleModal()} />
