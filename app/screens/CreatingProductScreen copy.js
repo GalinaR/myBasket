@@ -25,33 +25,16 @@ function CreatingProductScreen(props) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const formData = new FormData();
-    console.log("product", formData, product);
-
-    const uploadedFile = product?.files;
-    console.log("data", data);
-    // formData.append("qwer", uploadedFile);
-    if (uploadedFile) {
-      console.log("uploadedFile", uploadedFile, uploadedFile.fileName);
-      formData.append("image", {
-        uri: uploadedFile.uri,
-        type: uploadedFile.type,
-        fileName: uploadedFile.fileName,
-      });
-    }
-    if (product) {
-      formData.append("product", JSON.stringify(product));
-    }
-
+    // const formData = new FormData();
+    // console.log("product", formData, product);
     fetch("http://localhost:5000/products", {
       method: "POST",
       headers: {
-        // "Content-Type": "application/json",
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
-      body: formData,
+      body: JSON.stringify(product),
     })
-      .then((response) => console.log("response", response))
+      .then((response) => console.log("RESPONSE !!!", response))
 
       .catch((err) => {
         return err;

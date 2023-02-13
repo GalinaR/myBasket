@@ -38,10 +38,10 @@ function ListingProductsScreen(props) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    console.log("LOAD PRODUCTS");
     fetch("http://localhost:5000/products")
       .then((data) => data.json())
       .then((data2) => {
+        console.log("LOAD PRODUCTS", data2);
         const convertedData = data2.map((product) => {
           return {
             id: product.product_id,

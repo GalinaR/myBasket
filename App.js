@@ -1,3 +1,11 @@
+/* ToDo
+  1. принудительная презагрузка страницы в реакт нейтив
+  2. разобралться с картинкой
+  3. Аутентификаия ???
+
+
+
+*/
 import CreatingProductScreen from "./app/screens/CreatingProductScreen";
 import ListingProductsScreen from "./app/screens/ListingProductsScreen";
 import LoginScreen from "./app/screens/LoginScreen";

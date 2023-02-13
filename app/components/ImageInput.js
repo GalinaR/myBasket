@@ -37,7 +37,7 @@ function ImageInput({ imageUri, onChangeImage }) {
         quality: 0.5,
       });
       console.log("result", result);
-      if (!result.canceled) onChangeImage(result.assets[0].uri);
+      if (!result.canceled) onChangeImage(result.assets[0]);
     } catch (error) {
       console.log("Error reading an image", error);
     }
