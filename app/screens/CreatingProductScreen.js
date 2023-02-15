@@ -22,7 +22,7 @@ import defaultStyles from "../config/styles";
 import { FirebaseError, initializeApp } from "firebase/app"; //validate user
 import { getStorage, ref, uploadBytes } from "firebase/storage"; // access the storage database
 import { uploadImage } from "../firebase/storage";
-import { addProduct } from "../firebase/firestore";
+import { addProduct, addStore, getStores } from "../firebase/firestore";
 import auth from "../firebase/firebase";
 
 // import { useAuth } from "../firebase/auth";
@@ -42,7 +42,8 @@ function CreatingProductScreen(props) {
   const [priceProduct, setPriceProduct] = useState(0);
   const [selectedStore, setStore] = useState(0);
 
-  const [createdStore, setCreatedStore] = useState("");
+  const [stores, setStores] = useState([]);
+
   const [isModalVisible, setModalVisible] = useState(false);
 
   const data = [];
@@ -123,9 +124,35 @@ function CreatingProductScreen(props) {
   //     });
   // }, []);
 
-  const toggleModal = (value) => () => {
+  useEffect(() => {
+    console.log("call useEffect");
+    getStores("auth.currentUser?.uid", setStores);
+  }, []);
+
+  const handleSubmitStore = (value) => () => {
+    console.log("store_value", value);
     setModalVisible(!isModalVisible);
-    setCreatedStore(value);
+
+    try {
+      if (true) {
+        console.log("handleSubmitStore");
+
+        addStore("auth.currentUser?.uid", value);
+
+        console.log("FINISH");
+      }
+      // getstores
+      // uniqStore  ???
+
+      // checkUniqStore()
+      // if true
+      //   save to Firebase
+      // else error MSG
+
+      // setStore
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   const setStateImage = (image) => {
@@ -138,14 +165,20 @@ function CreatingProductScreen(props) {
       if (true) {
         console.log("handleSubmitProduct");
 
+        // getProducts
+
+        // uniqProduct  ???
+
+        // checkUniqProduct()
+        // if true
+        //   save to Firebase
+        // else error MSG
+
         const img = await fetch(imageUri);
         const bytesImg = await img.blob();
         console.log("bytesImg", bytesImg);
         const bucketImg = await uploadImage(bytesImg, "auth.currentUser?.uid");
-        // checkUniqStore()
-        // if true
-        //   save to Firebase
-        // else error MSG
+
         console.log("nameProduct", nameProduct);
         await addProduct(
           "auth.currentUser?.uid",
@@ -227,7 +260,7 @@ function CreatingProductScreen(props) {
         /> */}
       <SelectList
         setSelected={setStore}
-        data={data}
+        data={stores}
         boxStyles={styles.inputField}
         inputStyles={[defaultStyles.text, { color: "#6e6969", borderWidth: 0 }]}
         dropdownStyles={{
@@ -248,10 +281,13 @@ function CreatingProductScreen(props) {
       />
 
       <AppButton title="Create Product" onPress={handleSubmitProduct} />
-      <Button title="Create store" onPress={toggleModal()} />
+      <Button title="Create store" onPress={handleSubmitStore()} />
       {/* </AppForm> */}
 
-      <ModalTester isModalVisible={isModalVisible} toggleModal={toggleModal} />
+      <ModalTester
+        isModalVisible={isModalVisible}
+        toggleModal={handleSubmitStore}
+      />
     </Screen>
   );
 }
