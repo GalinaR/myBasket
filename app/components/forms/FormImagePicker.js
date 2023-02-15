@@ -4,14 +4,14 @@ import { useFormikContext } from "formik";
 import ErrorMessage from "./ErrorMessage";
 import ImageInput from "../ImageInput";
 
-function FormImagePicker({ name }) {
-  const { errors, setFieldValue, touched, values } = useFormikContext();
-  const imageUri = values[name]?.uri;
+function FormImagePicker({ name, imageUri, handleAdd }) {
+  // const { errors, setFieldValue, touched, values } = useFormikContext();
+  // const imageUri = values[name]?.uri;
 
-  const handleAdd = (uri) => {
-    setFieldValue(name, uri);
-    // setFieldValue("files", uri);
-  };
+  // const handleAdd = (uri) => {
+  //   setFieldValue(name, uri);
+  //   // setFieldValue("files", uri);
+  // };
 
   // const handleRemove = (uri) => {
   //   setFieldValue(
@@ -23,7 +23,7 @@ function FormImagePicker({ name }) {
   return (
     <>
       <ImageInput imageUri={imageUri} onChangeImage={handleAdd} />
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+      {/* <ErrorMessage error={errors[name]} visible={touched[name]} /> */}
       {/* <ImageInputList
         imageUris={imageUris}
         onAddImage={handleAdd}
