@@ -40,8 +40,8 @@ export default function App() {
   // return <FormImagePicker />;
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
       {/* <AuthNavigator /> */}
+      <AppNavigator />
     </NavigationContainer>
   );
 

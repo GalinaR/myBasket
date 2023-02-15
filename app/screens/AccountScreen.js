@@ -12,13 +12,23 @@ import Icon from "../components/Icon";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import WelcomeScreen from "./WelcomeScreen";
+import auth from "../firebase/firebase";
+import { signOut } from "firebase/auth";
 
 function AccountScreen(props) {
+  // const handleLogOut = () => {
+  //   signOut()
+  //     .then(() => {
+  //       navigation.reolace("LogIn");
+  //     })
+  //     .catch((error) => alert(error.message));
+  // };
+
   return (
     <Screen style={styles.container}>
       <View style={styles.account}>
-        <AppText style={styles.name}>Galina</AppText>
-        <AppText style={styles.email}>galina.sergarz@gmail.com</AppText>
+        {/* <AppText style={styles.name}>Galina</AppText> */}
+        <AppText style={styles.email}>{auth.currentUser?.email}</AppText>
       </View>
       <TouchableWithoutFeedback
         onPress={() => props.navigation.navigate(routes.LOGOUT)}

@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Button } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  TextInput,
+  View,
+  useColorScheme,
+} from "react-native";
 import * as Yup from "yup";
+import { SelectList } from "react-native-dropdown-select-list";
 
+import colors from "../config/colors";
 import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import ImageInput from "../components/ImageInput";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import ModalTester from "../components/ModalTester";
 import AppSelectStoreList from "../components/AppSelectStoreList";
+import defaultStyles from "../config/styles";
+import { uploadImage } from "../firebase/storage";
+// import { useAuth } from "../firebase/auth";
 
 const validationSchema = Yup.object();
 // .shape({
@@ -18,9 +29,12 @@ const validationSchema = Yup.object();
 // });
 
 function CreatingProductScreen(props) {
+  // const { authUser } = useAuth();
   const [product, setProduct] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [createdStore, setCreatedStore] = useState("");
+  const [selected, setSelected] = useState(); // Select a Store
+  const [values, setValues] = useState();
 
   const [data, setData] = useState([]);
 
@@ -125,6 +139,16 @@ function CreatingProductScreen(props) {
     setCreatedStore(value);
   };
 
+  // Store product information to Storage and Firestore
+  // const handleSubmit = async () => {
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     await uploadImage(product.file, authUser.uid);
+  //     props.onSuccess(RECE)
+  //   }
+  // }
+
   return (
     <Screen style={styles.container}>
       <AppForm
@@ -140,43 +164,78 @@ function CreatingProductScreen(props) {
           // onChangeImage={(uri) => setFieldValue(uri)}
           name="imageUri"
         />
-        {/* <ImageInput
-          imageUri={imageUri}
-          onChangeImage={(uri) => setImageUri(uri)}
-          name="image"
-        /> */}
-        <AppFormField
+        {/* <AppFormField
           maxLength={100}
           autoCorrect={false}
           name="title"
           placeholder="Title"
-        />
-        <AppFormField
+        /> */}
+        <View style={styles.inputField}>
+          <TextInput
+            // onChangeText={(email) => {
+            //   console.log("email", email);
+            //   setEmail(email);
+            // }}
+            autoCorrect={false}
+            maxLength={100}
+            name="title"
+            placeholder="Title"
+            style={[defaultStyles.text]}
+            // value={email}
+          />
+        </View>
+        {/* <AppFormField
           keyboardType="numeric"
           maxLength={8}
           name="price"
           placeholder="Price"
           width={120} // if don't write width it will be default 100% (from AppTextInput and AppFormField)
-        />
-        {/* <AppFormField
-          maxLength={100}
-          autoCorrect={false}
-          // data-store-id={1}
-          name="store"
-          placeholder="Store"
-          width="50%" // if don't write width it will be default 100% (from AppTextInput and AppFormField)
         /> */}
-        <AppSelectStoreList
+        <View style={[styles.inputField]}>
+          <TextInput
+            // onChangeText={(email) => {
+            //   console.log("email", email);
+            //   setEmail(email);
+            // }}
+            autoCorrect={false}
+            keyboardType="numeric"
+            maxLength={8}
+            name="price"
+            placeholder="Price"
+            style={[defaultStyles.text]}
+            // value={email}
+          />
+        </View>
+        {/* <AppSelectStoreList
           // setSelected={setSelected}
           data={data}
           // onSelect={() => handleChange(selected)}
-        />
-        {/* <SelectList
+        /> */}
+        <SelectList
           setSelected={setSelected}
           data={data}
-          onSelect={() => handleChange(selected)}
-        /> */}
-        <SubmitButton title="Create" />
+          boxStyles={styles.inputField}
+          inputStyles={[
+            defaultStyles.text,
+            { color: "#6e6969", borderWidth: 0 },
+          ]}
+          dropdownStyles={{
+            backgroundColor: defaultStyles.colors.light,
+            borderWidth: 0,
+          }}
+          dropdownTextStyles={[defaultStyles.text, { color: "#6e6969" }]}
+          placeholder="Select store"
+          name="store_name"
+          onSelect={() => {
+            // console.log("onSelect", selected);
+            setValues((values) => {
+              console.log("setValues", values, data);
+
+              return { ...values, store: data[selected - 1].value };
+            });
+          }}
+        />
+        <SubmitButton title="Create" onClick={console.log("handleSubmit")} />
       </AppForm>
       <Button title="Create store" onPress={toggleModal()} />
       <ModalTester isModalVisible={isModalVisible} toggleModal={toggleModal} />
@@ -187,6 +246,15 @@ function CreatingProductScreen(props) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  inputField: {
+    backgroundColor: defaultStyles.colors.light,
+    borderRadius: 25,
+    flexDirection: "row",
+    padding: 15,
+    marginVertical: 10,
+    width: "100%",
+    // borderColor:
   },
 });
 

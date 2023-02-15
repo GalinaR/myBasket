@@ -5,6 +5,7 @@ import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import ListingProductsScreen from "../screens/ListingProductsScreen";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,8 @@ const AccountNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="LogOut" component={WelcomeScreen} />
+      {/* <Stack.Screen name="LogIn" component={ListingProductsScreen} /> */}
+
       {/* <Stack.Screen name="LogIn" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} /> */}
     </Stack.Navigator>
