@@ -10,37 +10,42 @@ import {
 import Modal from "react-native-modal";
 
 import defaultStyles from "../config/styles";
-// import colors from "../config/colors";
 import Screen from "./Screen";
 
-function ModalTester(props) {
-  console.log("ModalTester");
-  const { isModalVisible, toggleModal } = props;
-  const [value, setValue] = useState(""); // This is to manage TextInput State
+export default function AddStoreModal({
+  isModalVisible,
+  handleModalOnPress,
+  errorMessage,
+  setErrorMessage,
+}) {
+  const [value, setValue] = useState("");
   return (
     <Screen style={styles.screen}>
       <Modal
-        // presentationStyle="formSheet"
         isVisible={isModalVisible}
+        onRequestClose={() => {
+          console.log("AddStoreModal CLOSE");
+        }}
       >
-        {/* <View style={styles.viewWrapper}> */}
         <View style={styles.modalView}>
           <TextInput
             placeholder="Enter store name..."
             value={value}
             style={[defaultStyles.text, styles.textInput]}
-            onChangeText={(value) => setValue(value)}
+            onChangeText={(value) => {
+              setErrorMessage("");
+              setValue(value);
+            }}
           />
+          {errorMessage ? (
+            <Text style={styles.error}>{errorMessage}</Text>
+          ) : (
+            <Text></Text>
+          )}
 
-          {/* <View style={{ flex: 1 }}>
-          <Text>Hello!</Text> */}
-
-          <Button title="Add store" onPress={toggleModal(value)} />
-          {/* </View> */}
+          <Button title="Add store" onPress={() => handleModalOnPress(value)} />
         </View>
-        {/* </View> */}
       </Modal>
-      {/* </View> */}
     </Screen>
   );
 }
@@ -51,10 +56,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    // top: "50%",
-    // left: "50%",
-    // elevation: 5,
-    // transform: [{ translateX: -(width * 0.4) }, { translateY: -90 }],
     height: 180,
     width: "100%",
     backgroundColor: defaultStyles.colors.white,
@@ -74,6 +75,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
   },
+  error: {
+    color: "red",
+    fontWeight: "bold",
+  },
 });
-
-export default ModalTester;

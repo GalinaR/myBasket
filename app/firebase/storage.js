@@ -1,4 +1,8 @@
-import { ref, uploadBytes, uploadString } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL as getStorageDownloadURL,
+} from "firebase/storage";
 import { format } from "date-fns";
 
 import { storage } from "./firebase";
@@ -17,4 +21,10 @@ export async function uploadImage(image, uid) {
   //   console.log("Uploaded a raw string!");
   // });
   return bucket;
+}
+
+// Gets the download URL from the reference URL
+export async function getDownloadURL(bucket) {
+  console.log("getDownloadURL", storage, bucket, ref(storage, bucket));
+  return await getStorageDownloadURL(ref(storage, bucket));
 }

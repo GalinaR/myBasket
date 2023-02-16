@@ -18,7 +18,7 @@ import Screen from "../components/Screen";
 import defaultStyles from "../config/styles";
 import colors from "../config/colors";
 
-import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import { AppForm, AppFormField, SubmitButton } from ".";
 
 const initialValues = { email: "", password: "" };
 const validationSchema = Yup.object().shape({

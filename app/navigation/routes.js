@@ -3,5 +3,7 @@ export default Object.freeze({
   LOGIN: "LogIn",
   LOGOUT: "LogOut",
   PRODUCT_DETAILS: "ProductDetails",
+  PRODUCT_EDIT: "ProductEdit",
+  LISTING_PRODUCTS: "Listings",
   REGISTER: "Register",
 });

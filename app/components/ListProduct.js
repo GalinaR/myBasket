@@ -11,9 +11,13 @@ function ListProduct({ title, price, image, IconComponent, store, onPress }) {
       onPress={onPress} // go to ViewProductScreen
     >
       <View style={styles.container}>
-        {/* ImageComponent for Icon rendering */}
         {IconComponent}
-        {image && <Image style={styles.image} source={image} />}
+        {image && (
+          <Image
+            style={styles.image}
+            source={require("../assets/background.png")}
+          />
+        )}
         <View style={styles.textContainer}>
           <AppText style={styles.title}>{title}</AppText>
           {price && <AppText style={styles.price}>{price}</AppText>}

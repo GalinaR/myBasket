@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TouchableOpacity,
   Image,
@@ -9,66 +9,35 @@ import {
   TextInput,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import auth from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
 } from "firebase/auth";
 
-// import AppButton from "../components/AppButton";
-// import Screen from "../components/Screen";
-// import routes from "../navigation/routes";
+import useAuth from "../context/useContext";
 
 import defaultStyles from "../config/styles";
-// import { useNavigation } from "@react-navigation/native";
-// import colors from "../config/colors";
 
 function WelcomeScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [password, setPassword] = useState("");
-
-  // const navigation = useNavigation;
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.navigate("Home");
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
-
-  // onAuthStateChanged(auth, (user) => {
-  //   console.log("onAuthStateChanged", user.uid);
-  //   if (user) {
-  //     navigation.navigate("Home");
-  //   }
-  // });
-
-  useEffect(() => {
-    console.log("useEffect email", email);
-  }, [email]);
+  const authContext = useAuth();
 
   const handleSignUp = () => {
-    console.log("!!!!", email, password);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Registered with:", user.email);
+        authContext.logIn(user);
       })
       .catch((error) => alert(error.message));
   };
 
   const handleLogin = () => {
-    console.log("! -- handleLogin -- !", email, password);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-
-        console.log("Logged in with:", user.email);
-        navigation.navigate("LogIn");
+        authContext.logIn(user);
       })
       .catch((error) => alert(error.message));
   };
@@ -83,7 +52,6 @@ function WelcomeScreen({ navigation }) {
         <Image style={styles.logo} source={require("../assets/logo.png")} />
         <Text style={styles.tagline}>Create a shopping list easily</Text>
 
-        {/* <View style={[styles.container]}> */}
         <View style={[styles.containerLogin]}>
           {
             <MaterialCommunityIcons
@@ -102,7 +70,7 @@ function WelcomeScreen({ navigation }) {
             }}
             style={defaultStyles.text}
             icon="email"
-            // keyboardType="email-address"
+            keyboardType="email-address"
             name="email"
             placeholder="Email"
             // value={email}
@@ -131,7 +99,6 @@ function WelcomeScreen({ navigation }) {
             // value={password}
           />
         </View>
-        {/* </View> */}
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
@@ -153,16 +120,6 @@ function WelcomeScreen({ navigation }) {
         >
           <Text style={styles.buttonText}>{"Register"}</Text>
         </TouchableOpacity>
-
-        {/* <AppButton
-            title="Login"
-            onPress={() => navigation.navigate(routes.LOGIN)}
-          />
-          <AppButton
-            title="Register"
-            color="secondary"
-            onPress={() => navigation.navigate(routes.REGISTER)}
-          /> */}
       </View>
     </ImageBackground>
   );

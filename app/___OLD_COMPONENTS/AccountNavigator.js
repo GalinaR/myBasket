@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import AccountScreen from "../screens/AccountScreen";
-import LoginScreen from "../screens/LoginScreen";
-import RegisterScreen from "../screens/RegisterScreen";
+import LoginScreen from "./LoginScreen";
+import RegisterScreen from "./RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ListingProductsScreen from "../screens/ListingProductsScreen";
 
@@ -18,10 +18,6 @@ const AccountNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="LogOut" component={WelcomeScreen} />
-      {/* <Stack.Screen name="LogIn" component={ListingProductsScreen} /> */}
-
-      {/* <Stack.Screen name="LogIn" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} /> */}
     </Stack.Navigator>
   );
 };

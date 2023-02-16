@@ -1,64 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Button, TextInput, View } from "react-native";
+import { StyleSheet, Button, TextInput, View, Image } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 
 import Screen from "../components/Screen";
-import FormImagePicker from "../components/FormImagePicker";
-import AddStoreModal from "../components/AddStoreModal";
+import useAuth from "../context/useContext";
 import AppButton from "../components/AppButton";
 import defaultStyles from "../config/styles";
-import { uploadImage } from "../firebase/storage";
-import {
-  addProduct,
-  getProducts,
-  addStore,
-  getStores,
-} from "../firebase/firestore";
 
-import useAuth from "../context/useContext";
+import { getProducts, updateProduct, getStores } from "../firebase/firestore";
 
 import routes from "../navigation/routes";
 
-function CreatingProductScreen({ navigation }) {
-  const { user } = useAuth();
+function EditProductScreen({ navigation, route }) {
+  const { product } = route.params;
+  const { user: authenticatedUser } = useAuth();
 
   const [imageUri, setImage] = useState("");
   const [nameProduct, setNameProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState(0);
   const [selectedStore, selectStore] = useState({});
+  const [stores, setStores] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const [stores, setStores] = useState([]);
-
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const [errorMessage, setErrorMessage] = useState("");
-
   useEffect(() => {
-    getStores(user?.auth?.currentUser.uid, setStores);
+    getStores(authenticatedUser?.auth?.currentUser.uid, setStores);
+    setImage(product.imageUri);
+    setNameProduct(product.title);
+    setPriceProduct(product.price);
   }, []);
 
-  const checkUniqStore = (stores, value) =>
-    stores.filter(({ store_name }) => store_name === value);
-
-  const handleSubmitStore = (value) => {
-    try {
-      if (value) {
-        if (checkUniqStore(stores, value).length === 0) {
-          addStore(user?.auth?.currentUser.uid, value);
-          setModalVisible(false);
-        } else {
-          setErrorMessage("Dublicate store");
-        }
-      }
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
-
-  const setStateImage = (image) => {
-    setImage(image?.uri);
-  };
+  useEffect(() => {
+    const currentStore = stores.find((store) => store.value === product.store);
+    console.log("currentStore", stores, currentStore);
+    selectStore(currentStore);
+  }, [stores]);
 
   const isProductUniq = (products, product) =>
     products.filter(
@@ -69,38 +44,47 @@ function CreatingProductScreen({ navigation }) {
         store === product.store
     ).length === 0;
 
-  const handleSubmitProduct = async () => {
-    console.log("BEGIN handleSubmitProduct", "store = ", selectedStore);
+  const handleConfirmEditProduct = async () => {
+    console.log("BEGIN handleConfirmEditProduct", "store = ", selectedStore);
     try {
-      if (user) {
-        getProducts(user?.auth?.currentUser.uid, setProducts);
+      if (authenticatedUser) {
+        getProducts(authenticatedUser?.auth?.currentUser.uid, setProducts);
         const isUniq = isProductUniq(products, {
-          uid: user?.auth?.currentUser.uid,
+          uid: authenticatedUser?.auth?.currentUser.uid,
           title: nameProduct,
           price: priceProduct,
           store: selectedStore.value,
         });
 
+        console.log(
+          "UPDATE handleConfirmEditProduct",
+          product,
+          product.id,
+          authenticatedUser?.auth?.currentUser.uid,
+          nameProduct,
+          priceProduct,
+          selectedStore.store_name,
+          product.originalImageURL
+        );
+
         if (isUniq) {
-          const img = await fetch(imageUri);
-          const bytesImg = await img.blob();
-          const bucketImg = await uploadImage(
-            bytesImg,
-            user?.auth?.currentUser.uid
-          );
-          await addProduct(
-            user?.auth?.currentUser.uid,
+          await updateProduct(
+            product.id,
+            authenticatedUser?.auth?.currentUser.uid,
             nameProduct,
             priceProduct,
-            selectedStore.value,
-            bucketImg
+            selectedStore.store_name,
+            product.originalImageURL
           );
 
           navigation.navigate(routes.LISTING_PRODUCTS);
+
+          console.log("ADD PRODUCT");
         } else {
           alert("Dublicate product");
         }
       } else {
+        alert("Login please");
       }
     } catch (error) {
       console.log("Error", error);
@@ -109,11 +93,7 @@ function CreatingProductScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      <FormImagePicker
-        imageUri={imageUri}
-        handleAdd={setStateImage}
-        // name="imageUri"
-      />
+      <Image style={styles.image} source={imageUri} />
 
       <View style={styles.inputField}>
         <TextInput
@@ -126,7 +106,7 @@ function CreatingProductScreen({ navigation }) {
           name="title"
           placeholder="Title"
           style={[defaultStyles.text]}
-          // value={email}
+          value={nameProduct}
         />
       </View>
 
@@ -139,7 +119,7 @@ function CreatingProductScreen({ navigation }) {
           name="price"
           placeholder="Price"
           style={[defaultStyles.text]}
-          // value={email}
+          value={priceProduct}
         />
       </View>
 
@@ -150,6 +130,7 @@ function CreatingProductScreen({ navigation }) {
         }}
         data={stores}
         boxStyles={styles.inputField}
+        defaultOption={selectedStore}
         inputStyles={[defaultStyles.text, { color: "#6e6969", borderWidth: 0 }]}
         dropdownStyles={{
           backgroundColor: defaultStyles.colors.light,
@@ -159,22 +140,13 @@ function CreatingProductScreen({ navigation }) {
         placeholder="Select store"
         name="store_name"
       />
-
-      <AppButton title="Create Product" onPress={handleSubmitProduct} />
-      <Button
-        title="Create store"
-        onPress={() => {
-          setModalVisible(true);
-          setErrorMessage("");
-        }}
-      />
-
-      <AddStoreModal
-        isModalVisible={isModalVisible}
-        handleModalOnPress={handleSubmitStore}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-      />
+      <View style={styles.buttonsContainer}>
+        <AppButton
+          title="Confirm Edit"
+          color="secondary"
+          onPress={handleConfirmEditProduct}
+        />
+      </View>
     </Screen>
   );
 }
@@ -191,6 +163,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "100%",
   },
+  buttonsContainer: {
+    marginTop: 10,
+  },
+  image: {
+    width: "70%",
+    height: 270,
+  },
 });
 
-export default CreatingProductScreen;
+export default EditProductScreen;

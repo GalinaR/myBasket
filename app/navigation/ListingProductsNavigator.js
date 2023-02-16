@@ -4,8 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ListingProductsScreen from "../screens/ListingProductsScreen";
 import ViewProductScreen from "../screens/ViewProductScreen";
 import CreatingProductScreen from "../screens/CreatingProductScreen";
+import EditProductScreen from "../screens/EditProductScreen";
 
-// const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 
 const ListingProductsNavigator = () => (
@@ -13,6 +13,7 @@ const ListingProductsNavigator = () => (
     <Stack.Screen name="Listings" component={ListingProductsScreen} />
     <Stack.Screen name="ProductDetails" component={ViewProductScreen} />
     <Stack.Screen name="CreateProduct" component={CreatingProductScreen} />
+    <Stack.Screen name="ProductEdit" component={EditProductScreen} />
   </Stack.Navigator>
 );
 

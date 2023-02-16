@@ -1,38 +1,32 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Button,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-import ListProduct from "../components/ListProduct";
 import AppText from "../components/AppText";
 import Icon from "../components/Icon";
-import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import WelcomeScreen from "./WelcomeScreen";
-import auth from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
+import useAuth from "../context/useContext";
 
 function AccountScreen(props) {
-  // const handleLogOut = () => {
-  //   signOut()
-  //     .then(() => {
-  //       navigation.reolace("LogIn");
-  //     })
-  //     .catch((error) => alert(error.message));
-  // };
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        logOut();
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const userEmail = user?.auth?.currentUser.email;
 
   return (
     <Screen style={styles.container}>
       <View style={styles.account}>
-        {/* <AppText style={styles.name}>Galina</AppText> */}
-        <AppText style={styles.email}>{auth.currentUser?.email}</AppText>
+        <AppText style={styles.email}>{userEmail}</AppText>
       </View>
-      <TouchableWithoutFeedback
-        onPress={() => props.navigation.navigate(routes.LOGOUT)}
-      >
+      <TouchableWithoutFeedback onPress={handleLogOut}>
         <View style={styles.logout}>
           <Icon
             name="logout"
